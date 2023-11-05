@@ -1,20 +1,40 @@
+
+
 import ReactSlider from 'react-slider';
 import './slider.css'
+import SettingContext from './SettingsContext';
+import { useContext } from 'react';
+import BackButton from './BackButton';
 
 function Settings (){
+    const settingsInfo = useContext(SettingContext)
     return(
         <div style={{textAlign:'left'}}>
-            <label>WORK MINS:</label>
+            <label>WORK MINS:{settingsInfo.workMinutes}:00</label>
             <ReactSlider
              className={'slider'}
              thumbClassName = {'thumb'}
              trackClassName ={'track'}
-             value={15}
+             value={settingsInfo.workMinutes}
+             onChange={newValue => settingsInfo.setWorkMinutes(newValue) }
              min={1}
              max={120}            
             />
-            <label>BREAK MINS:</label>
-             
+            
+            <label>BREAK MINS:{settingsInfo.breakMinutes}:00</label>
+            <ReactSlider
+             className={'slider  green'}
+             thumbClassName = {'thumb'}
+             trackClassName ={'track'}
+             value={settingsInfo.breakMinutes}
+             onChange={newValue => settingsInfo.setBreakMinutes(newValue) }
+             min={1}
+             max={120}            
+            />
+            <div styles={{textAlign:'center',marginTop :'20px'}}>
+              <BackButton onClick={() => settingsInfo.setShowSettings(false)}/>
+
+            </div>
         </div>
     )
 }
